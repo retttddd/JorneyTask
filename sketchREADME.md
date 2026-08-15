@@ -8,7 +8,7 @@ I assume that guest validation should work this way:
 
 # README
 
-This repository contains the [frontend](jorney-frontend) and [backend](jorney-backend) applications.
+This repository contains the [frontend](journey-frontend) and [backend](journey-backend) applications.
 
 # HOW TO RUN
 
@@ -38,4 +38,4 @@ The frontend uses **React**, **TypeScript**, and **Vite**, with **Tailwind** and
 Tailwind was used as a native solution for shadcn which was picked as a way of saving foundation time so i wouldnt invent already exisitng components once again. 
 
 ### AI
-Frontend implementation guidance: [AGENTS.md](jorney-frontend/AGENTS.md).
+Frontend implementation guidance: [AGENTS.md](journey-frontend/AGENTS.md).

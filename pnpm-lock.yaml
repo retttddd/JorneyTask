@@ -8,7 +8,7 @@ importers:
 
   .: {}
 
-  jorney-backend:
+  journey-backend:
     dependencies:
       '@nestjs/common':
         specifier: ^11.0.1
@@ -99,7 +99,7 @@ importers:
         specifier: ^8.20.0
         version: 8.67.0(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3)
 
-  jorney-frontend:
+  journey-frontend:
     dependencies:
       '@base-ui/react':
         specifier: ^1.7.0

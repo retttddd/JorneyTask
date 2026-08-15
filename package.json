@@ -1,7 +1,7 @@
 {
-  "name": "jorney-task",
+  "name": "journey-task",
   "private": true,
   "scripts": {
-    "dev": "pnpm --parallel --filter jorney-backend --filter jorney-frontend run dev"
+    "dev": "pnpm --parallel --filter journey-backend --filter journey-frontend run dev"
   }
 }

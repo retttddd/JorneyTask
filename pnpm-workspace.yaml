@@ -1,6 +1,6 @@
 packages:
-  - jorney-backend
-  - jorney-frontend
+  - journey-backend
+  - journey-frontend
 
 allowBuilds:
   unrs-resolver: false
