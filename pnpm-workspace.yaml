@@ -1,0 +1,6 @@
+packages:
+  - journey-backend
+  - journey-frontend
+
+allowBuilds:
+  unrs-resolver: false

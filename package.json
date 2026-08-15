@@ -1,0 +1,7 @@
+{
+  "name": "journey-task",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --parallel --filter journey-backend --filter journey-frontend run dev"
+  }
+}
