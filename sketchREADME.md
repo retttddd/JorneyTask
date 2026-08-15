@@ -5,7 +5,7 @@
   6. Names cant contain any numbers
   7. Many pools nearby are not water, but a bunch of pools
   8. I can use loosly cors for demonstration purposes, but in production it should be more strict.
-
+  9. I wont put my workflow in AI.md because most agents still read AGENTS.md and i will put it there
 # README
 
 This is a mmonorepo containing the [frontend](journey-frontend) and [backend](journey-backend) applications of task from juorney.
@@ -37,7 +37,7 @@ The NestJS backend loads the ASCII map and guest list once at startup, then keep
 
 The API is available at `http://localhost:8081`. CORS allows the Vite frontend at `http://localhost:3001` to call it via proxy
 
-Why Nest.js ? - easy to set up, has a lot of built-in features, and is a good fit for REST APIs. It also has a nice CLI for generating boilerplate code and tests 
+**Why Nest.js ?** - easy to set up, has a lot of built-in features, and is a good fit for REST APIs. It also has a nice CLI for generating boilerplate code and tests 
 
 ### Endpoints
 
@@ -77,5 +77,7 @@ The frontend uses **React**, **TypeScript**, and **Vite**, with **Tailwind** and
 
 Tailwind was used as a native solution for shadcn which was picked as a way of saving foundation time so i wouldnt invent already exisitng components once again. 
 
+Vite was used to implement monorepo, have faster bundle time and test integration. It might seem as overkill but in my opinion boilerplate code is a big part of the task and i wanted to save time on that.
+
 ### AI
-Frontend implementation guidance: [AGENTS.md](journey-frontend/AGENTS.md).
+Frontend implementation guidance: [AGENTS.md](journey-frontend/AGENTS.md). Made accent on mobile version and used guardrailed compoents from shadcn/ui. Used AI to generate some boilerplate code. Some of a more complex logic was implemnted on my own. Some parts of ui was using AGENTS.md and product design skills in Codex.
