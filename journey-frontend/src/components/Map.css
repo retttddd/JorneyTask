@@ -29,6 +29,16 @@ button.map-tile {
   cursor: pointer;
 }
 
+button.map-tile--booked:hover {
+  opacity: 1;
+}
+
+button.map-tile--booked:focus-visible {
+  z-index: 1;
+  outline: 3px solid var(--primary);
+  outline-offset: 1px;
+}
+
 .map-tile > svg {
   display: block;
   width: 100%;

@@ -6,7 +6,8 @@
   6. Names cant contain any numbers
   7. Many pools nearby are not water, but a bunch of pools
   8. I can use loosly cors for demonstration purposes, but in production it should be more strict.
-  9. I wont put my workflow in AI.md because most agents still read AGENTS.md and i will put it there
+  9. I wont put my workflow in AI.md because most agents still read AGENTS.md butr still will reference as a separate file [AI.md](journey-frontend/AI.md)
+
 # README
 
 This is a mmonorepo containing the [frontend](journey-frontend) and [backend](journey-backend) applications of task from juorney.
@@ -62,23 +63,34 @@ Example booking request:
 
 Only cabanas can be booked. Invalid guest details, a missing tile, and an already-booked cabana return a short error response.
 
-### Backend tests
-
-From `journey-backend`:
+### Tests
 
 ```bash
+cd journey-backend
+pnpm install
+pnpm test
 ```
+
+![](image.png)
+
 ### AI
 Did not use Ai enough to setup guardrails for the backend, but used it to generate some boilerplate code. The endpoints are small and do not require much because they have tests.
 
 # FRONTEND
 
-### About
 The frontend uses **React**, **TypeScript**, and **Vite**, with **Tailwind** and **hadcn/ui** components with accessible interface. The booking form uses **React Hook Form** with **Zod** for client-side input validation.
 
 Tailwind was used as a native solution for shadcn which was picked as a way of saving foundation time so i wouldnt invent already exisitng components once again. 
 
 Vite was used to implement monorepo, have faster bundle time and test integration. It might seem as overkill but in my opinion boilerplate code is a big part of the task and i wanted to save time on that.
 
+### Tests
+
+```bash
+cd journey-backend
+pnpm install
+pnpm test
+```
+
 ### AI
-Frontend implementation guidance: [AGENTS.md](journey-frontend/AGENTS.md). Made accent on mobile version and used guardrailed compoents from shadcn/ui. Used AI to generate some boilerplate code. Some of a more complex logic was implemnted on my own. Some parts of ui was using AGENTS.md and product design skills in Codex.
+Frontend implementation guidance: [AGENTS.md](journey-frontend/AGENTS.md) [AI.md](journey-frontend/AI.md). Made accent on mobile version and used guardrailed compoents from shadcn/ui. Used AI to generate some boilerplate code. Some of a more complex logic was implemnted on my own. Some parts of ui was using AGENTS.md and product design skills in Codex.

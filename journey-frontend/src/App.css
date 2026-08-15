@@ -117,7 +117,12 @@ h2 {
 }
 
 .booking-section {
+  min-height: 278px;
   background: color-mix(in oklch, var(--primary), var(--card) 96%);
+}
+
+.booking-section--hidden {
+  visibility: hidden;
 }
 
 .booking-form {

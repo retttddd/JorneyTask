@@ -113,7 +113,7 @@ function MapGrid({ tiles, selectedCabanaId, onCabanaSelect }: MapGridProps) {
             </>
           )
 
-          if (tile.name === 'cabana' && tile.vacant) {
+          if (tile.name === 'cabana') {
             return (
               <button
                 type="button"
@@ -121,7 +121,7 @@ function MapGrid({ tiles, selectedCabanaId, onCabanaSelect }: MapGridProps) {
                 key={tile.id}
                 style={{ gridColumn: tile.coordinates.x + 1, gridRow: tile.coordinates.y + 1 }}
                 onClick={() => onCabanaSelect(tile)}
-                aria-label={`Select available cabana ${tile.id}`}
+                aria-label={`${tile.vacant ? 'Select available' : 'View unavailable'} cabana ${tile.id}`}
                 aria-pressed={tile.id === selectedCabanaId}
               >
                 {content}
@@ -134,7 +134,7 @@ function MapGrid({ tiles, selectedCabanaId, onCabanaSelect }: MapGridProps) {
               className={className}
               key={tile.id}
               style={{ gridColumn: tile.coordinates.x + 1, gridRow: tile.coordinates.y + 1 }}
-              title={tile.name === 'cabana' ? 'Booked cabana' : tile.name}
+              title={tile.name}
             >
               {content}
             </div>

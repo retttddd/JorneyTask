@@ -8,12 +8,20 @@ import { HouseChimney } from '../icons/houseChimney'
 import { Pool } from '../icons/pool'
 import { ResortMap } from '@/components/Map'
 import { Button } from '@/components/ui/button'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import {
   Popover,
   PopoverContent,
-
   PopoverHeader,
   PopoverTitle,
   PopoverTrigger,
@@ -45,7 +53,7 @@ function App() {
 
   const applyMapTiles = (mapTiles: MapTile[]) => {
     setTiles(mapTiles)
-    setSelectedCabana((current) => mapTiles.find((tile) => tile.id === current?.id && tile.vacant) ?? null)
+    setSelectedCabana((current) => mapTiles.find((tile) => tile.id === current?.id) ?? null)
   }
 
   useEffect(() => {
@@ -68,7 +76,7 @@ function App() {
   }
 
   const selectCabana = (cabana: MapTile) => {
-    setSelectedCabana(cabana)
+    setSelectedCabana((current) => current?.id === cabana.id ? null : cabana)
     setBookingError(null)
     setBookingConfirmation(null)
     form.reset()
@@ -87,7 +95,7 @@ function App() {
     try {
       const bookedCabana = await bookCabana(selectedCabana, { room: roomNumber, guestName })
       setTiles((currentTiles) => currentTiles.map((tile) => tile.id === bookedCabana.id ? bookedCabana : tile))
-      setSelectedCabana(null)
+      setSelectedCabana(bookedCabana)
       setBookingConfirmation(`${bookedCabana.id} has been booked.`)
       form.reset()
     } catch (reason: unknown) {
@@ -132,62 +140,93 @@ function App() {
             </PopoverContent>
           </Popover>
 
-          <section className="panel-section booking-section" aria-labelledby="booking-heading">
-            <h2 id="booking-heading">{selectedCabana ? `Guest details for ${selectedCabana.id}` : 'Select an available cabana'}</h2>
+          <section
+            className={`panel-section booking-section${selectedCabana ? '' : ' booking-section--hidden'}`}
+            aria-labelledby="booking-heading"
+          >
+            <h2 id="booking-heading">
+              {selectedCabana
+                ? selectedCabana.vacant
+                  ? `Guest details for ${selectedCabana.id}`
+                  : `${selectedCabana.id} is unavailable`
+                : 'Select an available cabana'}
+            </h2>
             {bookingError && <p className="booking-message booking-message--error" role="alert">{bookingError}</p>}
-            {bookingConfirmation && <p className="booking-message" role="status">{bookingConfirmation}</p>}
-            <form
-              className="booking-form"
-              noValidate
-              onSubmit={form.handleSubmit(bookSelectedCabana)}
-            >
-              <FieldGroup>
-                <Controller
-                  name="roomNumber"
-                  control={form.control}
-                  render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor="room-number">Room number</FieldLabel>
-                      <Input
-                        {...field}
-                        id="room-number"
-                        inputMode="numeric"
-                        placeholder="e.g. 101"
-                        aria-invalid={fieldState.invalid}
-                        disabled={!selectedCabana || isBooking}
-                      />
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
-                  )}
-                />
-                <Controller
-                  name="guestName"
-                  control={form.control}
-                  render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor="guest-name">Guest name</FieldLabel>
-                      <Input
-                        {...field}
-                        id="guest-name"
-                        placeholder="e.g. Alice Smith"
-                        autoComplete="name"
-                        aria-invalid={fieldState.invalid}
-                        disabled={!selectedCabana || isBooking}
-                      />
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
-                  )}
-                />
-              </FieldGroup>
-              <Button type="submit" size="lg" className="booking-submit" disabled={!selectedCabana || isBooking}>
-                {isBooking ? 'Booking…' : 'Book cabana'}
-              </Button>
-            </form>
+            {selectedCabana && !selectedCabana.vacant ? (
+              <p className="booking-message" role="status">
+                Cabana {selectedCabana.id} is not available. Please select another cabana on the map.
+              </p>
+            ) : selectedCabana ? (
+              <form
+                className="booking-form"
+                noValidate
+                onSubmit={form.handleSubmit(bookSelectedCabana)}
+              >
+                <FieldGroup>
+                  <Controller
+                    name="roomNumber"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <Field data-invalid={fieldState.invalid}>
+                        <FieldLabel htmlFor="room-number">Room number</FieldLabel>
+                        <Input
+                          {...field}
+                          id="room-number"
+                          inputMode="numeric"
+                          placeholder="e.g. 101"
+                          aria-invalid={fieldState.invalid}
+                          disabled={isBooking}
+                        />
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
+                        )}
+                      </Field>
+                    )}
+                  />
+                  <Controller
+                    name="guestName"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <Field data-invalid={fieldState.invalid}>
+                        <FieldLabel htmlFor="guest-name">Guest name</FieldLabel>
+                        <Input
+                          {...field}
+                          id="guest-name"
+                          placeholder="e.g. Alice Smith"
+                          autoComplete="name"
+                          aria-invalid={fieldState.invalid}
+                          disabled={isBooking}
+                        />
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
+                        )}
+                      </Field>
+                    )}
+                  />
+                </FieldGroup>
+                <Button type="submit" size="lg" className="booking-submit" disabled={isBooking}>
+                  {isBooking ? 'Booking…' : 'Book cabana'}
+                </Button>
+              </form>
+            ) : null}
           </section>
+
+          <AlertDialog
+            open={Boolean(bookingConfirmation)}
+            onOpenChange={(open) => {
+              if (!open) setBookingConfirmation(null)
+            }}
+          >
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Booking confirmed</AlertDialogTitle>
+                <AlertDialogDescription>{bookingConfirmation}</AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogAction>Back to map</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </aside>
       </div>
     </main>
