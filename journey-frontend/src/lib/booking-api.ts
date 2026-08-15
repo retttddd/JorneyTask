@@ -16,7 +16,7 @@ export interface BookingGuest {
 }
 
 const tileNames = new Set<TileName>(['empty', 'cabana', 'pool', 'path', 'chalet'])
-const apiUrl = import.meta.env.VITE_API_URL ?? 'http://localhost:8081'
+const apiUrl = import.meta.env.VITE_API_URL ?? '/api'
 
 function isMapTile(value: unknown): value is MapTile {
   if (!value || typeof value !== 'object') {

@@ -9,10 +9,7 @@ async function bootstrap() {
   const map = createBookingMap(mapPath);
   const guests = createBookingGuests(bookingsPath);
   const app = await NestFactory.create(AppModule.forRoot(map, guests));
-  app.enableCors({
-    origin: process.env.FRONTEND_ORIGIN ?? 'http://localhost:3001',
-  });
-  await app.listen(process.env.PORT ?? 8081);
+  await app.listen(process.env.PORT ?? 8081, '127.0.0.1');
   console.log(`Using map: ${mapPath}`);
   console.log(`Using bookings: ${bookingsPath}`);
 }
