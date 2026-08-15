@@ -1,0 +1,7 @@
+{
+  "name": "jorney-task",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --parallel --filter jorney-backend --filter jorney-frontend run dev"
+  }
+}

@@ -7,14 +7,25 @@ I assume that guest validation should work this way:
   6.Names cant contain any numbers(validation process)
 
 # README
-This is one repo for [frontend](jorney-frontend) and [backend](jorney-backend)
+
+This repository contains the [frontend](jorney-frontend) and [backend](jorney-backend) applications.
 
 # HOW TO RUN
-Run from root this script to install deps and run both front-end and back-end
-``` ./scripts/run.sh --map ./map.ascii --bookings ./bookings.json ```
 
-./scripts/run.sh --map <path> --bookings <path>
-for more details check [explonation](scripts/explonation.md)
+From the repository root, install dependencies and start both applications:
+
+```bash
+pnpm install
+pnpm dev -- --map ./map.ascii --bookings ./bookings.json
+```
+
+`--map` and `--bookings` are required and must reference readable files. Paths are resolved from the repository root. The first `--` passes those arguments through pnpm to the development scripts.
+
+For alternate input files:
+
+```bash
+pnpm dev -- --map <path> --bookings <path>
+```
 
 # STACK
 React Tailwind ReactQuery Nest.Js

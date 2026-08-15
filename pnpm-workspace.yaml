@@ -1,0 +1,6 @@
+packages:
+  - jorney-backend
+  - jorney-frontend
+
+allowBuilds:
+  unrs-resolver: false
