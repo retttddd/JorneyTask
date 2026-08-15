@@ -1,10 +1,9 @@
-I assume that guest validation should work this way: 
-  1. Every W in map.ascii represents a cabana.
+My Assumptions: 
   2. Initially, all cabanas are available.
   3. bookings.json is actually the guest-validation list.
-  4. When a guest successfully books a cabana, the backend stores that booking in memory.
   5. That cabana becomes unavailable until the server restarts
-  6. Names cant contain any numbers(validation process)
+  6. Names cant contain any numbers
+  7. Many pools nearby are not water, but a bunch of pools
 
 # README
 
@@ -18,6 +17,7 @@ From the repository root, install dependencies and start both applications:
 pnpm install
 pnpm dev
 ```
+
 
 By default, the backend uses `map.ascii` and `bookings.json` from the repository root. Both files must be readable. Paths are resolved from the repository root.
 
