@@ -29,12 +29,9 @@ function parseRuntimePaths(argumentsList: string[]): ResortFiles {
     index += 1;
   }
 
-  const mapPath = values.get('--map');
-  const bookingsPath = values.get('--bookings');
-
-  if (!mapPath || !bookingsPath) {
-    throw new Error('Both --map <path> and --bookings <path> are required.');
-  }
+  const mapPath = values.get('--map') ?? resolve(repositoryRoot, 'map.ascii');
+  const bookingsPath =
+    values.get('--bookings') ?? resolve(repositoryRoot, 'bookings.json');
 
   return { mapPath, bookingsPath };
 }
