@@ -1,121 +1,121 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Controller, useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { Button } from '@/components/ui/button'
+import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
+import { Input } from '@/components/ui/input'
+import {
+  Popover,
+  PopoverContent,
+
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 import './App.css'
 
+const guestDetailsSchema = z.object({
+  roomNumber: z.string().trim().min(1, 'Enter your room number.'),
+  guestName: z.string().trim().min(1, 'Enter the guest name.'),
+})
+
+type GuestDetails = z.infer<typeof guestDetailsSchema>
+
 function App() {
-  const [count, setCount] = useState(0)
+  const form = useForm<GuestDetails>({
+    resolver: zodResolver(guestDetailsSchema),
+    defaultValues: {
+      roomNumber: '',
+      guestName: '',
+    },
+  })
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <main className="app-shell">
+      <header className="app-header">
+        <h1>Cabana Booking</h1>
+      </header>
 
-      <div className="ticks"></div>
+      <div className="workspace">
+        <section className="map-section" aria-label="Resort map">
+          <div className="map-placeholder">
+            <span>Resort map</span>
+          </div>
+        </section>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        <aside className="details-panel" aria-label="Map details">
+          <Popover>
+            <PopoverTrigger render={<Button variant="outline" />}>
+              Legend
+            </PopoverTrigger>
+            <PopoverContent align="end" className="legend-popover">
+              <PopoverHeader>
+                <PopoverTitle>Map legend</PopoverTitle>
+              </PopoverHeader>
+              <ul className="legend-list">
+                <li><span className="legend-mark" aria-hidden="true">W</span> Cabana</li>
+                <li><span className="legend-mark" aria-hidden="true">p</span> Pool</li>
+                <li><span className="legend-mark" aria-hidden="true">#</span> Path</li>
+                <li><span className="legend-mark" aria-hidden="true">c</span> Chalet</li>
+              </ul>
+            </PopoverContent>
+          </Popover>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+          <section className="panel-section booking-section" aria-labelledby="booking-heading">
+            <h2 id="booking-heading">Guest details</h2>
+            <form
+              className="booking-form"
+              noValidate
+              onSubmit={form.handleSubmit(() => undefined)}
+            >
+              <FieldGroup>
+                <Controller
+                  name="roomNumber"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field data-invalid={fieldState.invalid}>
+                      <FieldLabel htmlFor="room-number">Room number</FieldLabel>
+                      <Input
+                        {...field}
+                        id="room-number"
+                        inputMode="numeric"
+                        placeholder="e.g. 101"
+                        aria-invalid={fieldState.invalid}
+                      />
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
+                <Controller
+                  name="guestName"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field data-invalid={fieldState.invalid}>
+                      <FieldLabel htmlFor="guest-name">Guest name</FieldLabel>
+                      <Input
+                        {...field}
+                        id="guest-name"
+                        placeholder="e.g. Alice Smith"
+                        autoComplete="name"
+                        aria-invalid={fieldState.invalid}
+                      />
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
+              </FieldGroup>
+              <Button type="submit" size="lg" className="booking-submit">
+                Book cabana
+              </Button>
+            </form>
+          </section>
+        </aside>
+      </div>
+    </main>
   )
 }
 
