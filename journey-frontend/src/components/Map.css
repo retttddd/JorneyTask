@@ -1,0 +1,122 @@
+.resort-map-scroll {
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  background: #f5d59e;
+  box-shadow: 0 1px 2px oklch(0.141 0.005 285.823 / 0.05);
+  scrollbar-color: color-mix(in oklch, var(--foreground), transparent 65%) transparent;
+}
+
+.resort-map-grid {
+  --map-tile-size: 36px;
+  display: grid;
+  width: max-content;
+  min-width: 100%;
+  background: #f5d59e;
+}
+
+.map-tile {
+  position: relative;
+  display: grid;
+  width: var(--map-tile-size);
+  height: var(--map-tile-size);
+  place-items: center;
+  overflow: hidden;
+}
+
+button.map-tile {
+  appearance: none;
+  cursor: pointer;
+}
+
+.map-tile > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.map-tile--empty > svg {
+  opacity: 0.24;
+}
+
+.map-tile--cabana {
+  padding: 4px 3px 6px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+}
+
+.map-tile--cabana > svg {
+  height: calc(var(--map-tile-size) - 10px);
+}
+
+.map-tile--available {
+  border-color: #307650;
+  background: #dcebd2;
+}
+
+.map-tile--available:hover {
+  background: #cce5be;
+}
+
+.map-tile--available:focus-visible {
+  z-index: 1;
+  outline: 3px solid var(--primary);
+  outline-offset: 1px;
+}
+
+.map-tile--selected {
+  z-index: 1;
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 2px var(--primary);
+}
+
+.map-tile--booked {
+  border-color: #9a4738;
+  background: #f1d4ce;
+  opacity: 0.72;
+}
+
+.map-tile-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.map-feedback {
+  display: grid;
+  min-height: 560px;
+  place-items: center;
+  gap: 16px;
+  padding: 32px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  background: var(--card);
+  color: var(--muted-foreground);
+  text-align: center;
+}
+
+.map-feedback p {
+  margin: 0;
+}
+
+.map-feedback button {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--foreground);
+  border-radius: var(--radius-md);
+  background: var(--card);
+  color: var(--foreground);
+  cursor: pointer;
+}
+
+@media (max-width: 860px) {
+  .resort-map-grid {
+    --map-tile-size: 34px;
+  }
+
+  .map-feedback {
+    min-height: 388px;
+  }
+}
