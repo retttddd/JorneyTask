@@ -1,16 +1,16 @@
 
 # My Assumptions
-  2. Initially, all cabanas are available.
-  3. bookings.json is actually the guest-validation list.
-  5. That cabana becomes unavailable until the server restarts
-  6. Names cant contain any numbers
-  7. Many pools nearby are not water, but a bunch of pools
-  8. I can use loosly cors for demonstration purposes, but in production it should be more strict.
-  9. I wont put my workflow in AI.md because most agents still read AGENTS.md butr still will reference as a separate file [AI.md](journey-frontend/AI.md)
+1. Initially, all cabanas are available.
+2. `bookings.json` is actually the guest-validation list.
+3. That cabana becomes unavailable until the server restarts.
+4. Names can't contain any numbers.
+5. Several nearby map tiles represent pools rather than water.
+6. The supplied PNG map assets were converted into reusable TSX components for direct use in the React map.
 
 # README
 
-This is a mmonorepo containing the [frontend](journey-frontend) and [backend](journey-backend) applications of task from juorney.
+This is a monorepo containing the [frontend](journey-frontend) and [backend](journey-backend) applications for the journey task.
+Monorepo structure was chosen to simplify dependency management, streamline development, and facilitate testing across both applications.
 
 # HOW TO RUN
 
@@ -21,7 +21,6 @@ pnpm install
 pnpm dev
 ```
 
-
 By default, the backend uses `map.ascii` and `bookings.json` from the repository root. Both files must be readable. Paths are resolved from the repository root.
 
 For alternate input files:
@@ -30,16 +29,26 @@ For alternate input files:
 pnpm dev -- --map <path> --bookings <path>
 ```
 
+How to run tests 
+
+From the repository root:
+
+```bash
+pnpm test
+```
+
+See [tests.md](tests.md) for the covered scenarios.
+
 # STACK
-React Tailwind Nest.Js
+React, Tailwind, NestJS
 
 # BACKEND
 
 The NestJS backend loads the ASCII map and guest list once at startup, then keeps both in memory. Successful bookings update only the in-memory tile state, so all cabanas become available again after a server restart.
 
-The API is available at `http://localhost:8081`. CORS allows the Vite frontend at `http://localhost:3001` to call it via proxy
+The API is available at `http://localhost:8081`. CORS allows the Vite frontend at `http://localhost:3001` to call it via proxy. CORS is configured permissively for demonstration purposes and should be more restrictive in production.
 
-**Why Nest.js ?** - easy to set up, has a lot of built-in features, and is a good fit for REST APIs. It also has a nice CLI for generating boilerplate code and tests 
+**Why NestJS?** - easy to set up, has a lot of built-in features, and is a good fit for REST APIs. It also has a nice CLI for generating boilerplate code and tests
 
 ### Endpoints
 
@@ -70,27 +79,47 @@ cd journey-backend
 pnpm install
 pnpm test
 ```
-
-![](image.png)
-
-### AI
-Did not use Ai enough to setup guardrails for the backend, but used it to generate some boilerplate code. The endpoints are small and do not require much because they have tests.
+![](screenshots/image1.png)
 
 # FRONTEND
 
-The frontend uses **React**, **TypeScript**, and **Vite**, with **Tailwind** and **hadcn/ui** components with accessible interface. The booking form uses **React Hook Form** with **Zod** for client-side input validation.
+The frontend uses **React**, **TypeScript**, and **Vite**, with **Tailwind** and **shadcn/ui** components to provide an accessible interface. The booking form uses **React Hook Form** with **Zod** for client-side input validation.
 
-Tailwind was used as a native solution for shadcn which was picked as a way of saving foundation time so i wouldnt invent already exisitng components once again. 
+Tailwind was used as the native styling solution for shadcn/ui, saving time establishing a component foundation and avoiding the need to rebuild existing components.
 
-Vite was used to implement monorepo, have faster bundle time and test integration. It might seem as overkill but in my opinion boilerplate code is a big part of the task and i wanted to save time on that.
+Vite was used for the monorepo setup, fast builds, and test integration. Although it may seem like overkill, its boilerplate saves time on this task.
 
 ### Tests
 
 ```bash
-cd journey-backend
+cd journey-frontend
 pnpm install
 pnpm test
 ```
+![](screenshots/image.png)
 
-### AI
-Frontend implementation guidance: [AGENTS.md](journey-frontend/AGENTS.md) [AI.md](journey-frontend/AI.md). Made accent on mobile version and used guardrailed compoents from shadcn/ui. Used AI to generate some boilerplate code. Some of a more complex logic was implemnted on my own. Some parts of ui was using AGENTS.md and product design skills in Codex.
+## Results
+
+Desktop booking flow:
+
+![Desktop booking form](screenshots/desktop-booking-form.png)
+
+Booking confirmation:
+
+![Booking confirmation](screenshots/booking-confirmed.png)
+
+Unavailable-cabana feedback:
+
+![Unavailable cabana feedback](screenshots/unavailable-cabana.png)
+
+Map legend:
+
+![Map legend](screenshots/map-legend.png)
+
+Mobile version (the final screenshot):
+
+![Mobile resort map](screenshots/mobile-view.png)
+
+## AI workflow
+
+See [AI.md](journey-frontend/AI.md) for the tools and workflow used.

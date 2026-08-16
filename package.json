@@ -2,6 +2,7 @@
   "name": "journey-task",
   "private": true,
   "scripts": {
-    "dev": "pnpm --parallel --filter journey-backend --filter journey-frontend run dev"
+    "dev": "pnpm --parallel --filter journey-backend --filter journey-frontend run dev",
+    "test": "pnpm --filter journey-backend test && pnpm --filter journey-backend test:e2e && pnpm --filter journey-frontend test"
   }
 }
