@@ -122,4 +122,4 @@ Mobile version (the final screenshot):
 
 ## AI workflow
 
-See [AI.md](journey-frontend/AI.md) for the tools and workflow used.
+See [AI.md](AI.md) for the tools and workflow used.
