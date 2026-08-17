@@ -1,4 +1,6 @@
-export type TileName = 'empty' | 'cabana' | 'pool' | 'path' | 'chalet'
+import { tileNameValues, type TileName } from './tile.constants'
+
+export type { TileName } from './tile.constants'
 
 export interface MapTile {
   id: string
@@ -15,7 +17,6 @@ export interface BookingGuest {
   guestName: string
 }
 
-const tileNames = new Set<TileName>(['empty', 'cabana', 'pool', 'path', 'chalet'])
 const apiUrl = import.meta.env.VITE_API_URL ?? '/api'
 
 function isMapTile(value: unknown): value is MapTile {
@@ -34,7 +35,7 @@ function isMapTile(value: unknown): value is MapTile {
   return (
     typeof tile.id === 'string' &&
     typeof tile.name === 'string' &&
-    tileNames.has(tile.name as TileName) &&
+    tileNameValues.has(tile.name as TileName) &&
     typeof tile.vacant === 'boolean' &&
     typeof position.x === 'number' &&
     Number.isInteger(position.x) &&

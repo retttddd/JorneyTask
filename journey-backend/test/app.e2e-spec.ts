@@ -4,19 +4,20 @@ import request from 'supertest';
 import { App } from 'supertest/types';
 import { AppModule } from './../src/app.module';
 import { MapTile } from '../src/booking/booking-map';
+import { MAP_TILE_NAMES } from '../src/booking/tile.constants';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication<App>;
   const cabana: MapTile = {
     id: 'cabana-0-0',
     coordinates: { x: 0, y: 0 },
-    name: 'cabana',
+    name: MAP_TILE_NAMES.CABANA,
     vacant: true,
   };
   const pool: MapTile = {
     id: 'pool-1-0',
     coordinates: { x: 1, y: 0 },
-    name: 'pool',
+    name: MAP_TILE_NAMES.POOL,
     vacant: true,
   };
   const validBooking = {
@@ -66,7 +67,7 @@ describe('AppController (e2e)', () => {
       .expect({
         id: 'cabana-0-0',
         coordinates: { x: 0, y: 0 },
-        name: 'cabana',
+        name: MAP_TILE_NAMES.CABANA,
         vacant: false,
       });
 
@@ -87,7 +88,7 @@ describe('AppController (e2e)', () => {
         {
           id: 'cabana-0-0',
           coordinates: { x: 0, y: 0 },
-          name: 'cabana',
+          name: MAP_TILE_NAMES.CABANA,
           vacant: false,
         },
         pool,

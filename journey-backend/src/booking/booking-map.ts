@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
+import { MAP_TILE_NAMES, type MapTileName } from './tile.constants';
 
-export type MapTileName = 'empty' | 'cabana' | 'pool' | 'path' | 'chalet';
+export type { MapTileName } from './tile.constants';
 
 export interface MapTile {
   id: string;
@@ -13,11 +14,11 @@ export interface MapTile {
 }
 
 const tileNames = new Map<string, MapTileName>([
-  ['.', 'empty'],
-  ['W', 'cabana'],
-  ['p', 'pool'],
-  ['#', 'path'],
-  ['c', 'chalet'],
+  ['.', MAP_TILE_NAMES.EMPTY],
+  ['W', MAP_TILE_NAMES.CABANA],
+  ['p', MAP_TILE_NAMES.POOL],
+  ['#', MAP_TILE_NAMES.PATH],
+  ['c', MAP_TILE_NAMES.CHALET],
 ]);
 
 export function createBookingMap(mapPath: string): Map<string, MapTile> {

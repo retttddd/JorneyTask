@@ -9,6 +9,7 @@ import { HouseChimney } from '../../icons/houseChimney'
 import { ParchmentBasic } from '../../icons/parchmentBasic'
 import { Pool } from '../../icons/pool'
 import type { MapTile } from '@/lib/booking-api'
+import { TILE_NAMES } from '@/lib/tile.constants'
 import './Map.css'
 
 type Icon = ComponentType<SVGProps<SVGSVGElement>>
@@ -21,7 +22,7 @@ interface MapIcon {
 function getPathIcon(tile: MapTile, tiles: Map<string, MapTile>): MapIcon {
   const { x, y } = tile.coordinates
   const hasPathAt = (offsetX: number, offsetY: number) =>
-    tiles.get(`${x + offsetX},${y + offsetY}`)?.name === 'path'
+    tiles.get(`${x + offsetX},${y + offsetY}`)?.name === TILE_NAMES.PATH
   const north = hasPathAt(0, -1)
   const east = hasPathAt(1, 0)
   const south = hasPathAt(0, 1)
@@ -56,15 +57,15 @@ function getPathIcon(tile: MapTile, tiles: Map<string, MapTile>): MapIcon {
 
 function getTileIcon(tile: MapTile, tiles: Map<string, MapTile>): MapIcon {
   switch (tile.name) {
-    case 'cabana':
+    case TILE_NAMES.CABANA:
       return { icon: Cabana, rotation: 0 }
-    case 'pool':
+    case TILE_NAMES.POOL:
       return { icon: Pool, rotation: 0 }
-    case 'path':
+    case TILE_NAMES.PATH:
       return getPathIcon(tile, tiles)
-    case 'chalet':
+    case TILE_NAMES.CHALET:
       return { icon: HouseChimney, rotation: 0 }
-    case 'empty':
+    case TILE_NAMES.EMPTY:
       return { icon: ParchmentBasic, rotation: 0 }
   }
 }
@@ -94,14 +95,14 @@ function MapGrid({ tiles, selectedCabanaId, onCabanaSelect }: MapGridProps) {
       <div
         className="resort-map-grid"
         role="group"
-        aria-label={`Resort map with ${tiles.filter((tile) => tile.name === 'cabana' && tile.vacant).length} available cabanas`}
+        aria-label={`Resort map with ${tiles.filter((tile) => tile.name === TILE_NAMES.CABANA && tile.vacant).length} available cabanas`}
         style={{
           gridTemplateColumns: `repeat(${dimensions.columns}, var(--map-tile-size))`,
           gridTemplateRows: `repeat(${dimensions.rows}, var(--map-tile-size))`,
         }}
       >
         {positionedTiles.map(({ icon: TileIcon, rotation, ...tile }) => {
-          const className = `map-tile map-tile--${tile.name}${tile.name === 'cabana' ? ` map-tile--${tile.vacant ? 'available' : 'booked'}` : ''}${tile.id === selectedCabanaId ? ' map-tile--selected' : ''}`
+          const className = `map-tile map-tile--${tile.name}${tile.name === TILE_NAMES.CABANA ? ` map-tile--${tile.vacant ? 'available' : 'booked'}` : ''}${tile.id === selectedCabanaId ? ' map-tile--selected' : ''}`
           const content = (
             <>
               <TileIcon
@@ -109,11 +110,11 @@ function MapGrid({ tiles, selectedCabanaId, onCabanaSelect }: MapGridProps) {
                 focusable="false"
                 style={rotation === 0 ? undefined : { transform: `rotate(${rotation}deg)` }}
               />
-              {tile.name === 'cabana' && <span className="map-tile-status">{tile.vacant ? 'Available' : 'Booked'}</span>}
+              {tile.name === TILE_NAMES.CABANA && <span className="map-tile-status">{tile.vacant ? 'Available' : 'Booked'}</span>}
             </>
           )
 
-          if (tile.name === 'cabana') {
+          if (tile.name === TILE_NAMES.CABANA) {
             return (
               <button
                 type="button"

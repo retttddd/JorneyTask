@@ -3,25 +3,26 @@ import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import App from './App'
 import type { MapTile } from './lib/booking-api'
+import { TILE_NAMES } from './lib/tile.constants'
 
 const availableCabana: MapTile = {
   id: 'cabana-1-1',
   coordinates: { x: 1, y: 1 },
-  name: 'cabana',
+  name: TILE_NAMES.CABANA,
   vacant: true,
 }
 
 const bookedCabana: MapTile = {
   id: 'cabana-2-1',
   coordinates: { x: 2, y: 1 },
-  name: 'cabana',
+  name: TILE_NAMES.CABANA,
   vacant: false,
 }
 
 const mapTiles: MapTile[] = [
   availableCabana,
   bookedCabana,
-  { id: 'pool-0-0', coordinates: { x: 0, y: 0 }, name: 'pool', vacant: false },
+  { id: 'pool-0-0', coordinates: { x: 0, y: 0 }, name: TILE_NAMES.POOL, vacant: false },
 ]
 
 const jsonResponse = (body: unknown, status = 200) =>

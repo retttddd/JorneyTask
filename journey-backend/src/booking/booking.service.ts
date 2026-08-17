@@ -8,6 +8,7 @@ import {
 import { BOOKING_GUESTS, BOOKING_MAP } from './booking.constants';
 import { BookingGuest } from './booking-guests';
 import { MapTile } from './booking-map';
+import { MAP_TILE_NAMES } from './tile.constants';
 
 export interface BookTileRequest {
   tile: {
@@ -47,7 +48,7 @@ export class BookingService {
       throw new NotFoundException('The selected tile does not exist.');
     }
 
-    if (tile.name !== 'cabana') {
+    if (tile.name !== MAP_TILE_NAMES.CABANA) {
       throw new BadRequestException('Only cabanas can be booked.');
     }
 
